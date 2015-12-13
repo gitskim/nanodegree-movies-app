@@ -5,7 +5,7 @@ import android.app.Application;
 /**
  * Created by kimsuh on 12/10/15.
  */
-public class App extends Application{
+public class App extends Application {
 
     public static final String TAG = App.class.getSimpleName();
 
@@ -27,6 +27,11 @@ public class App extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
+        appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+        appComponent.inject(this);
+    }
 
+    public AppComponent getDaggerComponent() {
+        return appComponent;
     }
 }

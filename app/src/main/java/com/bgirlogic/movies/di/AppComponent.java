@@ -1,8 +1,10 @@
 package com.bgirlogic.movies.di;
 
-import android.support.test.espresso.core.deps.dagger.Component;
+
+import com.bgirlogic.movies.MainActivity;
 
 import javax.inject.Singleton;
+import dagger.Component;
 
 /**
  * Created by kimsuh on 12/10/15.
@@ -16,6 +18,7 @@ public interface AppComponent {
     void inject(App application);
 
     //Activities
+    void inject(MainActivity activity);
 
     //Fragments
 }
