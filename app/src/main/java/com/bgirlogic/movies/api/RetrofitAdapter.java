@@ -2,17 +2,17 @@ package com.bgirlogic.movies.api;
 
 import com.squareup.okhttp.OkHttpClient;
 
-import java.util.Observable;
-
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Senpai on 12/13/15.
  */
 public class RetrofitAdapter {
-    private static RetrofitAdapter mInstance = null;
 
     private static RetrofitAdapter mInstance = null;
 
@@ -38,6 +38,9 @@ public class RetrofitAdapter {
         return mInstance;
     }
 
-    public Observable
+    public Observable<Movies> getMovies(String sortBy) {
+        return mApiService.getMovies(sortBy).observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.newThread());
+    }
 
 }

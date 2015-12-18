@@ -5,9 +5,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.bgirlogic.movies.api.Movies;
+import com.bgirlogic.movies.api.RetrofitAdapter;
+
+import rx.Observer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +32,12 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchMovies();
     }
 
     @Override
@@ -48,5 +60,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void fetchMovies() {
+        RetrofitAdapter.getInstance().getMovies("popularity_desc")
+            .subscribe(new Observer<Movies>() {
+                @Override
+                public void onCompleted() {
+                    Log.e("TAG", "completed " + RetrofitAdapter.getInstance().getMovies("popularity_desc"));
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    Log.e("TAG", "onError");
+                }
+
+                @Override
+                public void onNext(Movies movies) {
+
+                }
+            });
     }
 }
