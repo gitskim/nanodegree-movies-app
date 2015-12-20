@@ -10,12 +10,17 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.bgirlogic.movies.api.Movies;
+import com.bgirlogic.movies.api.models.Movie;
+import com.bgirlogic.movies.api.models.Movies;
 import com.bgirlogic.movies.api.RetrofitAdapter;
+
+import java.util.List;
 
 import rx.Observer;
 
 public class MainActivity extends AppCompatActivity {
+
+    private List<Movie> mMovies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        fetchMovies();
+        fetchMovies("popularity_desc");
     }
 
     @Override
@@ -62,22 +67,23 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void fetchMovies() {
-        RetrofitAdapter.getInstance().getMovies("popularity_desc")
+    private void fetchMovies(String sortBy) {
+        RetrofitAdapter.getInstance().getMovies(sortBy)
             .subscribe(new Observer<Movies>() {
                 @Override
                 public void onCompleted() {
-                    Log.e("TAG", "completed " + RetrofitAdapter.getInstance().getMovies("popularity_desc"));
+                    Log.e("TAG", "completed ");
                 }
 
                 @Override
                 public void onError(Throwable e) {
-                    Log.e("TAG", "onError");
+                    Log.e("TAG", "onError " + e.getMessage());
                 }
 
                 @Override
                 public void onNext(Movies movies) {
-
+                    mMovies = movies.getResults();
+                    Log.e("TAG", "result is: " + mMovies);
                 }
             });
     }

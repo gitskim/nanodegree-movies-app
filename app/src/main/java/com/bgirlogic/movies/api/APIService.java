@@ -1,5 +1,8 @@
 package com.bgirlogic.movies.api;
 
+import com.bgirlogic.movies.api.models.Movie;
+import com.bgirlogic.movies.api.models.Movies;
+
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
