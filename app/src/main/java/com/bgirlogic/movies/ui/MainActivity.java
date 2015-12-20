@@ -1,4 +1,4 @@
-package com.bgirlogic.movies;
+package com.bgirlogic.movies.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.bgirlogic.movies.R;
 import com.bgirlogic.movies.api.models.Movie;
 import com.bgirlogic.movies.api.models.Movies;
 import com.bgirlogic.movies.api.RetrofitAdapter;

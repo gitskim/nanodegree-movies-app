@@ -1,7 +1,7 @@
 package com.bgirlogic.movies.di;
 
 
-import com.bgirlogic.movies.MainActivity;
+import com.bgirlogic.movies.ui.MainActivity;
 
 import javax.inject.Singleton;
 import dagger.Component;
