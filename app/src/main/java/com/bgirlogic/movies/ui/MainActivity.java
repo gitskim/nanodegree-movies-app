@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -17,11 +19,15 @@ import com.bgirlogic.movies.api.RetrofitAdapter;
 
 import java.util.List;
 
+import butterknife.Bind;
 import rx.Observer;
 
 public class MainActivity extends AppCompatActivity {
 
     private List<Movie> mMovies;
+
+    @Bind(R.id.recycler_view)
+    protected RecyclerView mRecylerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        mRecylerView.setLayoutManager(
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        StaggeredViewAdapter adapter = new StaggeredViewAdapter(this, mMovies);
+        mRecylerView.setAdapter(adapter);
+        SpaceItemDecoration decoration = new SpaceItemDecoration(16);
+        mRecylerView.addItemDecoration(decoration);
     }
 
     @Override
@@ -70,22 +83,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void fetchMovies(String sortBy) {
         RetrofitAdapter.getInstance().getMovies(sortBy)
-            .subscribe(new Observer<Movies>() {
-                @Override
-                public void onCompleted() {
-                    Log.e("TAG", "completed ");
-                }
+                .subscribe(new Observer<Movies>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.e("TAG", "completed ");
+                    }
 
-                @Override
-                public void onError(Throwable e) {
-                    Log.e("TAG", "onError " + e.getMessage());
-                }
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("TAG", "onError " + e.getMessage());
+                    }
 
-                @Override
-                public void onNext(Movies movies) {
-                    mMovies = movies.getResults();
-                    Log.e("TAG", "result is: " + mMovies);
-                }
-            });
+                    @Override
+                    public void onNext(Movies movies) {
+                        mMovies = movies.getResults();
+                        Log.e("TAG", "result is: " + mMovies);
+                    }
+                });
     }
 }
