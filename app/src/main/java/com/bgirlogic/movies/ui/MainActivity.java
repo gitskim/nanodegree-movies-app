@@ -19,15 +19,13 @@ import com.bgirlogic.movies.api.RetrofitAdapter;
 
 import java.util.List;
 
-import butterknife.Bind;
 import rx.Observer;
 
 public class MainActivity extends AppCompatActivity {
 
     private List<Movie> mMovies;
 
-    @Bind(R.id.recycler_view)
-    protected RecyclerView mRecylerView;
+    private RecyclerView mRecylerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,18 +43,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        View mParentView = findViewById(R.id.activity_main);
+        mRecylerView = (RecyclerView) mParentView.findViewById(R.id.recycler_view);
         mRecylerView.setLayoutManager(
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        StaggeredViewAdapter adapter = new StaggeredViewAdapter(this, mMovies);
-        mRecylerView.setAdapter(adapter);
-        SpaceItemDecoration decoration = new SpaceItemDecoration(16);
-        mRecylerView.addItemDecoration(decoration);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         fetchMovies("popularity_desc");
+    }
+
+    private void initAdapter() {
+        StaggeredViewAdapter adapter = new StaggeredViewAdapter(this, mMovies);
+        mRecylerView.setAdapter(adapter);
+        SpaceItemDecoration decoration = new SpaceItemDecoration(16);
+        mRecylerView.addItemDecoration(decoration);
     }
 
     @Override
@@ -98,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onNext(Movies movies) {
                         mMovies = movies.getResults();
                         Log.e("TAG", "result is: " + mMovies);
+                        initAdapter();
                     }
                 });
     }
