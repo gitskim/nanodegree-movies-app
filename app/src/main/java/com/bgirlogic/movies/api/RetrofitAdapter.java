@@ -6,6 +6,7 @@ import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 
 import java.io.IOException;
 
@@ -21,13 +22,17 @@ import rx.schedulers.Schedulers;
  */
 public class RetrofitAdapter {
 
+    private final String MIN_VOTE_COUNT_PARAM = "vote_count.gte";
+
+    private final String MIN_VOTE_COUNT_PARAM_VALUE = "1000";
+
+    private final static String API_KEY_PARAM = "api_key";
+
     private static RetrofitAdapter mInstance = null;
 
     private APIService mApiService;
 
     private OkHttpClient mHttpClient;
-
-    private final static String API_KEY_PARAM = "api_key";
 
     private RetrofitAdapter() {
 
@@ -38,12 +43,17 @@ public class RetrofitAdapter {
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
                 HttpUrl url = request.httpUrl().newBuilder()
+                        .addQueryParameter(MIN_VOTE_COUNT_PARAM, MIN_VOTE_COUNT_PARAM_VALUE)
                         .addQueryParameter(API_KEY_PARAM, Constants.API_KEY)
                         .build();
                 request = request.newBuilder().url(url).build();
                 return chain.proceed(request);
             }
         });
+
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        mHttpClient.interceptors().add(loggingInterceptor);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.API_ADDRESS)

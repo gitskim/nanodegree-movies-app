@@ -19,12 +19,15 @@ import com.bgirlogic.movies.api.RetrofitAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
 import rx.Observer;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    private static final String SORT_BY_POPULARITY = "popularity.desc";
+
+    private static final String SORTY_BY_RATING = "vote_count.desc";
 
     private List<Movie> mMovies;
 
@@ -50,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        fetchMovies("popularity_desc");
+        fetchMovies(SORT_BY_POPULARITY);
     }
 
     @Override
@@ -68,8 +71,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_sort_popularity) {
+            fetchMovies(SORT_BY_POPULARITY);
+        } else if (id == R.id.action_sort_rating) {
+            fetchMovies(SORTY_BY_RATING);
         }
 
         return super.onOptionsItemSelected(item);
