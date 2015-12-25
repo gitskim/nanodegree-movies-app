@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.bgirlogic.movies.R;
 import com.bgirlogic.movies.api.models.Movie;
+import com.bgirlogic.movies.common.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -36,7 +37,8 @@ public class StaggeredViewAdapter extends RecyclerView.Adapter<StaggeredView> {
 
     @Override
     public void onBindViewHolder(StaggeredView holder, int position) {
-        Picasso.with(mContext).load(mMovies.get(position).getPosterPath())
+        Picasso.with(mContext)
+                .load(Utils.getImageUrl(mMovies.get(position).getPosterPath()))
                 .into(holder.mMovieThumbnail);
 
         holder.mMovieTitle.setText(mMovies.get(position).getTitle());
@@ -44,6 +46,6 @@ public class StaggeredViewAdapter extends RecyclerView.Adapter<StaggeredView> {
 
     @Override
     public int getItemCount() {
-        return mMovies.size();
+        return mMovies == null ? 0 : mMovies.size();
     }
 }

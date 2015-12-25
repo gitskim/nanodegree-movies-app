@@ -17,6 +17,7 @@ import com.bgirlogic.movies.api.models.Movie;
 import com.bgirlogic.movies.api.models.Movies;
 import com.bgirlogic.movies.api.RetrofitAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observer;
@@ -27,22 +28,14 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecylerView;
 
+    private StaggeredViewAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         View mParentView = findViewById(R.id.activity_main);
         mRecylerView = (RecyclerView) mParentView.findViewById(R.id.recycler_view);
         mRecylerView.setLayoutManager(
@@ -56,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initAdapter() {
-        StaggeredViewAdapter adapter = new StaggeredViewAdapter(this, mMovies);
-        mRecylerView.setAdapter(adapter);
+        mAdapter = new StaggeredViewAdapter(this, mMovies);
+        mRecylerView.setAdapter(mAdapter);
         SpaceItemDecoration decoration = new SpaceItemDecoration(16);
         mRecylerView.addItemDecoration(decoration);
     }
@@ -100,9 +93,25 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onNext(Movies movies) {
                         mMovies = movies.getResults();
+                        mMovies = filterMovies();
                         Log.e("TAG", "result is: " + mMovies);
                         initAdapter();
+                        updateAdapter();
                     }
                 });
+    }
+
+    private List<Movie> filterMovies() {
+        List<Movie> newMovies = new ArrayList<Movie>();
+        for (int i = 0; i < mMovies.size(); i++) {
+            if (mMovies.get(i).getPosterPath() != null) {
+                newMovies.add(mMovies.get(i));
+            }
+        }
+        return newMovies;
+    }
+
+    private void updateAdapter() {
+        mAdapter.notifyDataSetChanged();
     }
 }
