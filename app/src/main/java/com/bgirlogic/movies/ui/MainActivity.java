@@ -1,8 +1,6 @@
 package com.bgirlogic.movies.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -11,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 
 import com.bgirlogic.movies.R;
 import com.bgirlogic.movies.api.models.Movie;
@@ -20,15 +19,20 @@ import com.bgirlogic.movies.api.RetrofitAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
 import rx.Observer;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private List<Movie> mMovies;
 
     private RecyclerView mRecylerView;
 
     private StaggeredViewAdapter mAdapter;
+
+    private ProgressBar mLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +44,13 @@ public class MainActivity extends AppCompatActivity {
         mRecylerView = (RecyclerView) mParentView.findViewById(R.id.recycler_view);
         mRecylerView.setLayoutManager(
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mLoader = (ProgressBar) mParentView.findViewById(R.id.loader);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         fetchMovies("popularity_desc");
-    }
-
-    private void initAdapter() {
-        mAdapter = new StaggeredViewAdapter(this, mMovies);
-        mRecylerView.setAdapter(mAdapter);
-        SpaceItemDecoration decoration = new SpaceItemDecoration(16);
-        mRecylerView.addItemDecoration(decoration);
     }
 
     @Override
@@ -78,27 +76,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchMovies(String sortBy) {
+        showLaoder();
         RetrofitAdapter.getInstance().getMovies(sortBy)
                 .subscribe(new Observer<Movies>() {
                     @Override
                     public void onCompleted() {
-                        Log.e("TAG", "completed ");
+                        Log.e(TAG, "completed ");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("TAG", "onError " + e.getMessage());
+                        Log.e(TAG, "onError " + e.getMessage());
                     }
 
                     @Override
                     public void onNext(Movies movies) {
+                        hideLoader();
                         mMovies = movies.getResults();
                         mMovies = filterMovies();
-                        Log.e("TAG", "result is: " + mMovies);
+                        Log.e(TAG, "result is: " + mMovies);
                         initAdapter();
                         updateAdapter();
                     }
                 });
+    }
+
+    private void initAdapter() {
+        mAdapter = new StaggeredViewAdapter(this, mMovies);
+        mRecylerView.setAdapter(mAdapter);
+        SpaceItemDecoration decoration = new SpaceItemDecoration(16);
+        mRecylerView.addItemDecoration(decoration);
+    }
+
+    private void hideLoader() {
+        mLoader.setVisibility(View.GONE);
+    }
+
+    private void showLaoder() {
+        mLoader.setVisibility(View.VISIBLE);
     }
 
     private List<Movie> filterMovies() {
