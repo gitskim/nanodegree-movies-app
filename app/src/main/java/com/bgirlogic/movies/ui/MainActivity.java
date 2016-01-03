@@ -1,6 +1,7 @@
 package com.bgirlogic.movies.ui;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -37,17 +38,21 @@ public class MainActivity extends AppCompatActivity {
 
     private ProgressBar mLoader;
 
+    private boolean mIsPopularitySorted;
+    
+    private View mMainCoordinatorLayoutView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        View mParentView = findViewById(R.id.activity_main);
-        mRecylerView = (RecyclerView) mParentView.findViewById(R.id.recycler_view);
+        mMainCoordinatorLayoutView = findViewById(R.id.activity_main);
+        mRecylerView = (RecyclerView) mMainCoordinatorLayoutView.findViewById(R.id.recycler_view);
         mRecylerView.setLayoutManager(
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        mLoader = (ProgressBar) mParentView.findViewById(R.id.loader);
+        mLoader = (ProgressBar) mMainCoordinatorLayoutView.findViewById(R.id.loader);
         initAdapter();
     }
 
@@ -55,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         fetchMovies(SORT_BY_POPULARITY);
+        mIsPopularitySorted = true;
     }
 
     @Override
@@ -73,9 +79,23 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_sort_popularity) {
+            if (mIsPopularitySorted) {
+                Snackbar.make(mMainCoordinatorLayoutView,
+                        "Already sorted based on popularity", Snackbar.LENGTH_SHORT)
+                .show();
+                return true;
+            }
             fetchMovies(SORT_BY_POPULARITY);
+            mIsPopularitySorted = true;
         } else if (id == R.id.action_sort_rating) {
+            if (!mIsPopularitySorted) {
+                Snackbar.make(mMainCoordinatorLayoutView,
+                        "Already sorted based on ranks", Snackbar.LENGTH_SHORT)
+                .show();
+                return true;
+            }
             fetchMovies(SORTY_BY_RATING);
+            mIsPopularitySorted = false;
         }
 
         return super.onOptionsItemSelected(item);
