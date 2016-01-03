@@ -48,4 +48,11 @@ public class StaggeredViewAdapter extends RecyclerView.Adapter<StaggeredView> {
     public int getItemCount() {
         return mMovies == null ? 0 : mMovies.size();
     }
+
+    public void addMovies(List<Movie> movies) {
+        if (movies != null) {
+            mMovies = movies;
+            notifyDataSetChanged();
+        }
+    }
 }

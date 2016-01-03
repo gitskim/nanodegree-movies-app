@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         mRecylerView.setLayoutManager(
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mLoader = (ProgressBar) mParentView.findViewById(R.id.loader);
+        initAdapter();
     }
 
     @Override
@@ -100,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
                         mMovies = movies.getResults();
                         mMovies = filterMovies();
                         Log.e(TAG, "result is: " + mMovies);
-                        initAdapter();
                         updateAdapter();
                     }
                 });
@@ -132,6 +132,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateAdapter() {
-        mAdapter.notifyDataSetChanged();
+        if (mMovies != null) {
+            mAdapter.addMovies(mMovies);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 }
