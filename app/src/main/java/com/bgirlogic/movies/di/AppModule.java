@@ -15,7 +15,7 @@ public class AppModule {
 
     private final Context appContext;
 
-    AppModule(Application application) {
+    public AppModule(Application application) {
         this.appContext = application.getApplicationContext();
     }
 
