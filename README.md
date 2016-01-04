@@ -1,6 +1,6 @@
 # Movies app
 
-https://cloud.githubusercontent.com/assets/8352119/12086042/35b5f172-b294-11e5-8864-02e76308038b.png
+![Alt text](https://cloud.githubusercontent.com/assets/8352119/12086042/35b5f172-b294-11e5-8864-02e76308038b.png)
 
 Features: 
 1) Movies are displayed in RecyclerView containing CardView for the staggered look with AppCompat animations.
