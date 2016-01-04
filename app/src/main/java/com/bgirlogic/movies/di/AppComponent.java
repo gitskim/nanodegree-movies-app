@@ -1,6 +1,8 @@
 package com.bgirlogic.movies.di;
 
 
+import com.bgirlogic.movies.App;
+import com.bgirlogic.movies.ui.DetailedActivity;
 import com.bgirlogic.movies.ui.MainActivity;
 
 import javax.inject.Singleton;
@@ -19,6 +21,8 @@ public interface AppComponent {
 
     //Activities
     void inject(MainActivity activity);
+
+    void inject(DetailedActivity activity);
 
     //Fragments
 }

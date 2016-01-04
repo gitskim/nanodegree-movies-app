@@ -1,6 +1,10 @@
-package com.bgirlogic.movies.di;
+package com.bgirlogic.movies;
 
 import android.app.Application;
+
+import com.bgirlogic.movies.di.AppComponent;
+import com.bgirlogic.movies.di.AppModule;
+import com.bgirlogic.movies.di.DaggerAppComponent;
 
 /**
  * Created by kimsuh on 12/10/15.
@@ -27,6 +31,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        sInstance = this;
         appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
         appComponent.inject(this);
     }
