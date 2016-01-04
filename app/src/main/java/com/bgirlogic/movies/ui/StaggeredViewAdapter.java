@@ -1,7 +1,7 @@
 package com.bgirlogic.movies.ui;
 
 import android.content.Context;
-import android.content.Intent;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +24,8 @@ public class StaggeredViewAdapter extends RecyclerView.Adapter<StaggeredView> {
     private List<Movie> mMovies;
 
     private static Context sContext = App.getInstance().getApplicationContext();
+
+    private int lastPosition = -1;
 
     public StaggeredViewAdapter() {
         this.mMovies = null;
@@ -53,6 +55,11 @@ public class StaggeredViewAdapter extends RecyclerView.Adapter<StaggeredView> {
                         DetailedActivity.newIntent(sContext, mMovies.get(position)));
             }
         });
+
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition) {
+            ViewCompat.animate(holder.itemView).rotation(2);
+        }
     }
 
     @Override
