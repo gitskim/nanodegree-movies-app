@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         mIsPopularitySorted = true;
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -127,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initAdapter() {
-        mAdapter = new StaggeredViewAdapter(this, mMovies);
+        mAdapter = new StaggeredViewAdapter();
         mRecylerView.setAdapter(mAdapter);
         SpaceItemDecoration decoration = new SpaceItemDecoration(16);
         mRecylerView.addItemDecoration(decoration);

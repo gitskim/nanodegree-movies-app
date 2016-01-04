@@ -1,11 +1,14 @@
 package com.bgirlogic.movies.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bgirlogic.movies.App;
 import com.bgirlogic.movies.R;
 import com.bgirlogic.movies.api.models.Movie;
 import com.bgirlogic.movies.common.Utils;
@@ -18,13 +21,12 @@ import java.util.List;
  */
 public class StaggeredViewAdapter extends RecyclerView.Adapter<StaggeredView> {
 
-    private Context mContext;
-
     private List<Movie> mMovies;
 
-    public StaggeredViewAdapter(Context context, List<Movie> movies) {
-        this.mContext = context;
-        this.mMovies = movies;
+    private static Context sContext = App.getInstance().getApplicationContext();
+
+    public StaggeredViewAdapter() {
+        this.mMovies = null;
     }
 
     @Override
@@ -36,12 +38,21 @@ public class StaggeredViewAdapter extends RecyclerView.Adapter<StaggeredView> {
     }
 
     @Override
-    public void onBindViewHolder(StaggeredView holder, int position) {
-        Picasso.with(mContext)
+    public void onBindViewHolder(StaggeredView holder, final int position) {
+        Picasso.with(sContext)
                 .load(Utils.getImageUrl(mMovies.get(position).getPosterPath()))
                 .into(holder.mMovieThumbnail);
 
         holder.mMovieTitle.setText(mMovies.get(position).getTitle());
+
+        holder.mGridItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("tag", "movieId: " + mMovies.get(position).getId());
+                v.getContext().startActivity(
+                        DetailedActivity.newIntent(sContext, mMovies.get(position)));
+            }
+        });
     }
 
     @Override
