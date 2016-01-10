@@ -1,4 +1,4 @@
-package com.bgirlogic.movies.ui;
+package com.bgirlogic.movies.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
