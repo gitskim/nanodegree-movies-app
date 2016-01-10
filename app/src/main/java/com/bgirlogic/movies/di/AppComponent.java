@@ -5,6 +5,7 @@ import com.bgirlogic.movies.App;
 import com.bgirlogic.movies.ui.activity.BaseActivity;
 import com.bgirlogic.movies.ui.activity.DetailedActivity;
 import com.bgirlogic.movies.ui.activity.MainActivity;
+import com.bgirlogic.movies.ui.fragment.MainFragment;
 
 import javax.inject.Singleton;
 
@@ -29,4 +30,5 @@ public interface AppComponent {
     void inject(DetailedActivity activity);
 
     //Fragments
+    void inject(MainFragment fragment);
 }
