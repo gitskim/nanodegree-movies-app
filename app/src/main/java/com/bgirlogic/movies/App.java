@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.bgirlogic.movies.di.AppComponent;
 import com.bgirlogic.movies.di.AppModule;
+import com.bgirlogic.movies.di.DaggerAppComponent;
 
 /**
  * Created by kimsuh on 12/10/15.
