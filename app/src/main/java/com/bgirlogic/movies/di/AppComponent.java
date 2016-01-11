@@ -2,7 +2,7 @@ package com.bgirlogic.movies.di;
 
 
 import com.bgirlogic.movies.App;
-import com.bgirlogic.movies.ui.activity.BaseActivity;
+import com.bgirlogic.movies.ui.StaggeredViewAdapter;
 import com.bgirlogic.movies.ui.activity.DetailedActivity;
 import com.bgirlogic.movies.ui.activity.MainActivity;
 import com.bgirlogic.movies.ui.fragment.MainFragment;
@@ -23,12 +23,11 @@ public interface AppComponent {
     void inject(App application);
 
     //Activities
-    void inject(BaseActivity activity);
-
     void inject(MainActivity activity);
 
     void inject(DetailedActivity activity);
 
     //Fragments
     void inject(MainFragment fragment);
+    void inject(StaggeredViewAdapter adapter);
 }

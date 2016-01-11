@@ -74,12 +74,11 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
+        mView = inflater.inflate(R.layout.fragment_main, container, false);
+        ButterKnife.bind(this, mView);
+
         //inject this activity's dependencies
         ((App) getActivity().getApplication()).getDaggerComponent().inject(this);
-
-        mView = inflater.inflate(R.layout.fragment_main, container, false);
-
-        ButterKnife.bind(this, mView);
 
         mRecylerView.setLayoutManager(
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));

@@ -26,9 +26,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         mMainCoordinatorLayoutView = findViewById(R.id.activity_base);
 
-        //inject this activity's dependencies
-        ((App) getApplication()).getDaggerComponent().inject(this);
-
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(getContainerId(), getFragment())
