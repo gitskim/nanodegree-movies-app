@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,31 +14,24 @@ import android.widget.ProgressBar;
 
 import com.bgirlogic.movies.App;
 import com.bgirlogic.movies.R;
-import com.bgirlogic.movies.api.RetrofitAdapter;
 import com.bgirlogic.movies.api.models.Movie;
-import com.bgirlogic.movies.api.models.Movies;
 import com.bgirlogic.movies.ui.SpaceItemDecoration;
 import com.bgirlogic.movies.ui.StaggeredViewAdapter;
+import com.bgirlogic.movies.ui.presenter.MainPresenterImp;
+import com.bgirlogic.movies.ui.view.MovieListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observer;
 
 /**
  * Created by Senpai on 1/10/16.
  */
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements MovieListView {
 
     private static final String TAG = MainFragment.class.getSimpleName();
-
-    private static final String SORT_BY_POPULARITY = "popularity.desc";
-
-    private static final String SORTY_BY_RATING = "vote_count.desc";
 
     private View mView;
 
@@ -55,6 +47,8 @@ public class MainFragment extends Fragment {
 
     private StaggeredViewAdapter mAdapter;
 
+    private MainPresenterImp mMainPresenterImp;
+
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
@@ -66,6 +60,8 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mMainPresenterImp = new MainPresenterImp(this);
+        mMovies = new ArrayList<>();
     }
 
     @Nullable
@@ -81,6 +77,7 @@ public class MainFragment extends Fragment {
 
         mRecylerView.setLayoutManager(
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+
         initAdapter();
         return mView;
     }
@@ -88,7 +85,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        fetchMovies(SORT_BY_POPULARITY);
+        mMainPresenterImp.onResume();
     }
 
     @Override
@@ -104,7 +101,7 @@ public class MainFragment extends Fragment {
                         .show();
                 return true;
             }
-            fetchMovies(SORT_BY_POPULARITY);
+            mMainPresenterImp.fetchMovies(MainPresenterImp.SORT_BY_POPULARITY);
             mIsPopularitySorted = true;
         } else if (id == R.id.action_sort_rating) {
             if (!mIsPopularitySorted) {
@@ -113,7 +110,7 @@ public class MainFragment extends Fragment {
                         .show();
                 return true;
             }
-            fetchMovies(SORTY_BY_RATING);
+            mMainPresenterImp.fetchMovies(MainPresenterImp.SORTY_BY_RATING);
             mIsPopularitySorted = false;
         }
 
@@ -127,40 +124,6 @@ public class MainFragment extends Fragment {
         mRecylerView.addItemDecoration(decoration);
     }
 
-    private void fetchMovies(String sortBy) {
-        showLaoder();
-        RetrofitAdapter.getInstance().getMovies(sortBy)
-                .subscribe(new Observer<Movies>() {
-                    @Override
-                    public void onCompleted() {
-                        Log.e(TAG, "completed ");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG, "onError " + e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(Movies movies) {
-                        hideLoader();
-                        mMovies = movies.getResults();
-                        mMovies = filterMovies();
-                        Log.e(TAG, "result is: " + mMovies);
-                        updateAdapter();
-                    }
-                });
-    }
-    private List<Movie> filterMovies() {
-        List<Movie> newMovies = new ArrayList<Movie>();
-        for (int i = 0; i < mMovies.size(); i++) {
-            if (mMovies.get(i).getPosterPath() != null) {
-                newMovies.add(mMovies.get(i));
-            }
-        }
-        return newMovies;
-    }
-
     private void updateAdapter() {
         if (mMovies != null) {
             mAdapter.addMovies(mMovies);
@@ -168,11 +131,24 @@ public class MainFragment extends Fragment {
         }
     }
 
-    private void hideLoader() {
+    @Override
+    public void showLoading() {
+        mLoader.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
         mLoader.setVisibility(View.GONE);
     }
 
-    private void showLaoder() {
-        mLoader.setVisibility(View.VISIBLE);
+    @Override
+    public void setItems(List<Movie> movies) {
+        mMovies.addAll(movies);
+        updateAdapter();
+    }
+
+    @Override
+    public void remove(Movie movie) {
+
     }
 }

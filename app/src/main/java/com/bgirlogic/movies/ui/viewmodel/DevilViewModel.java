@@ -1,4 +1,4 @@
-package com.bgirlogic.movies.ui.model;
+package com.bgirlogic.movies.ui.viewmodel;
 
 /**
  * Created by Senpai on 1/6/16.

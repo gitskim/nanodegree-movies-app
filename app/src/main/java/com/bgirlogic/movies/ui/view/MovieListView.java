@@ -8,7 +8,4 @@ public interface MovieListView extends DevilListView{
     void showLoading();
 
     void hideLoading();
-
-    void onError();
-
 }

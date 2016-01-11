@@ -1,6 +1,6 @@
 package com.bgirlogic.movies.ui.view;
 
-import com.bgirlogic.movies.ui.model.DevilViewModel;
+import com.bgirlogic.movies.api.models.Movie;
 
 import java.util.List;
 
@@ -9,9 +9,7 @@ import java.util.List;
  */
 public interface DevilListView {
 
-    void add(DevilViewModel model);
+    void setItems(List<Movie> movies);
 
-    void add(List<DevilViewModel> model);
-
-    void remove(DevilViewModel model);
+    void remove(Movie movie);
 }
