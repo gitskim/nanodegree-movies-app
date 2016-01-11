@@ -29,5 +29,4 @@ public interface AppComponent {
 
     //Fragments
     void inject(MainFragment fragment);
-    void inject(StaggeredViewAdapter adapter);
 }

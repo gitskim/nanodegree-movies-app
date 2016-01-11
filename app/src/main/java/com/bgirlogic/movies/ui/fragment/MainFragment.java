@@ -53,8 +53,7 @@ public class MainFragment extends Fragment {
     @Bind(R.id.loader)
     protected ProgressBar mLoader;
 
-    @Inject
-    protected StaggeredViewAdapter mAdapter;
+    private StaggeredViewAdapter mAdapter;
 
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
@@ -84,6 +83,12 @@ public class MainFragment extends Fragment {
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         initAdapter();
         return mView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        fetchMovies(SORT_BY_POPULARITY);
     }
 
     @Override
