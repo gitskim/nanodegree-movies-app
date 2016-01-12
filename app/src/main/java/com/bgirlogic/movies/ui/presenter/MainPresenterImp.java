@@ -1,8 +1,8 @@
 package com.bgirlogic.movies.ui.presenter;
 
 import com.bgirlogic.movies.api.RetrofitAdapter;
-import com.bgirlogic.movies.api.models.Movie;
-import com.bgirlogic.movies.api.models.Movies;
+import com.bgirlogic.movies.api.models.movie.Movie;
+import com.bgirlogic.movies.api.models.movie.Movies;
 import com.bgirlogic.movies.ui.view.MovieListView;
 
 import java.util.ArrayList;

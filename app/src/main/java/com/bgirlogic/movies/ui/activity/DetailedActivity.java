@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.bgirlogic.movies.App;
 import com.bgirlogic.movies.R;
-import com.bgirlogic.movies.api.models.Movie;
+import com.bgirlogic.movies.api.models.movie.Movie;
 import com.bgirlogic.movies.common.Utils;
 import com.squareup.picasso.Picasso;
 

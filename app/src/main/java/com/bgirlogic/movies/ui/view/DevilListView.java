@@ -1,6 +1,6 @@
 package com.bgirlogic.movies.ui.view;
 
-import com.bgirlogic.movies.api.models.Movie;
+import com.bgirlogic.movies.api.models.movie.Movie;
 
 import java.util.List;
 

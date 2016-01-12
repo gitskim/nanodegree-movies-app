@@ -1,6 +1,6 @@
 package com.bgirlogic.movies.ui.viewmodel;
 
-import com.bgirlogic.movies.api.models.Movie;
+import com.bgirlogic.movies.api.models.movie.Movie;
 
 /**
  * Created by Senpai on 1/6/16.

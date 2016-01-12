@@ -1,6 +1,6 @@
 package com.bgirlogic.movies.api;
 
-import com.bgirlogic.movies.api.models.Movies;
+import com.bgirlogic.movies.api.models.movie.Movies;
 import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
