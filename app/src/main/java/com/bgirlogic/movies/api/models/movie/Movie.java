@@ -1,4 +1,4 @@
-package com.bgirlogic.movies.api.models;
+package com.bgirlogic.movies.api.models.movie;
 
 import android.os.Parcel;
 import android.os.Parcelable;
