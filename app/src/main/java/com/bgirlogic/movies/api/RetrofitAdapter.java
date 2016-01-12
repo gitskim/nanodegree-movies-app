@@ -1,6 +1,8 @@
 package com.bgirlogic.movies.api;
 
 import com.bgirlogic.movies.api.models.movie.Movies;
+import com.bgirlogic.movies.api.models.review.Reviews;
+import com.bgirlogic.movies.api.models.trailer.Trailers;
 import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
@@ -74,6 +76,16 @@ public class RetrofitAdapter {
 
     public Observable<Movies> getMovies(String sortBy) {
         return mApiService.getMovies(sortBy).observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.newThread());
+    }
+
+    public Observable<Trailers> getTrailers(String id) {
+        return mApiService.getTrailers(id).observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.newThread());
+    }
+
+    public Observable<Reviews> getReviews(String id) {
+        return mApiService.getReviews(id).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread());
     }
 

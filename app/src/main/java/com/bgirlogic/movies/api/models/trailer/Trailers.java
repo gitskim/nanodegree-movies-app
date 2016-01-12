@@ -3,7 +3,6 @@ package com.bgirlogic.movies.api.models.trailer;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.bgirlogic.movies.api.models.review.Review;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -17,13 +16,13 @@ public class Trailers implements Parcelable {
     private int id;
 
     @SerializedName("results")
-    private List<Review> results;
+    private List<Trailer> results;
 
     public int getId() {
         return id;
     }
 
-    public List<Review> getResults() {
+    public List<Trailer> getResults() {
         return results;
     }
 
