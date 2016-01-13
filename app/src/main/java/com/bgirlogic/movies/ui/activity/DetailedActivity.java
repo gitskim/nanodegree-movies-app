@@ -52,7 +52,7 @@ public class DetailedActivity extends AppCompatActivity {
         //inject dependencies
         ((App) getApplication()).getDaggerComponent().inject(this);
 
-        setContentView(R.layout.activity_detailed);
+        setContentView(R.layout.fragment_detailed);
 
         //inject views
         ButterKnife.bind(this);
