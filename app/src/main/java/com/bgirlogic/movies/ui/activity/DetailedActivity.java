@@ -41,12 +41,11 @@ public class DetailedActivity extends BaseActivity {
 
         //inject views
         ButterKnife.bind(this);
-
-        mMovie = getIntent().getParcelableExtra(PARAM_MOVIE);
     }
 
     @Override
     protected Fragment getFragment() {
-        return DetailedFragment.newInstance(mMovie);
+        mMovie = getIntent().getParcelableExtra(PARAM_MOVIE);
+        return DetailedFragment.newInstance(mMovie);//null here
     }
 }

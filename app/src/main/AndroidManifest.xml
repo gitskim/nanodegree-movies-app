@@ -26,6 +26,7 @@
             android:name=".ui.activity.DetailedActivity"
             android:label="Movie"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 </manifest>
