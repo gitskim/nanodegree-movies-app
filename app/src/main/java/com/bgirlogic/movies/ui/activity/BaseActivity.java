@@ -35,7 +35,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected int getContainerId() {
         return R.id.container;
-    };
+    }
 
     protected abstract Fragment getFragment();
 }
