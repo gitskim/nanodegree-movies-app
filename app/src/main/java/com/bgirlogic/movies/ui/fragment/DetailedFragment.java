@@ -87,7 +87,7 @@ public class DetailedFragment extends Fragment implements DetailListView {
         Picasso.with(getContext())
                 .load(Utils.getImageUrl(mMovie.getPosterPath())).into(mImageView);
 
-        mTitle.setText("Title: " + mMovie.getTitle());
+        mTitle.setText(mMovie.getTitle());
 
         mReleaseDate.setText("Release date: " + mMovie.getReleaseDate());
 
