@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Senpai on 1/6/16.
  */
-public interface MovieListView {
+public interface MovieListView extends DevilListView{
 
     void showLoading();
 

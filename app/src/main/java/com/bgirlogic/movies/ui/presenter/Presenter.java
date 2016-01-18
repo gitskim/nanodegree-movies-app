@@ -1,11 +1,12 @@
 package com.bgirlogic.movies.ui.presenter;
 
+import com.bgirlogic.movies.ui.view.DevilListView;
 import com.bgirlogic.movies.ui.view.MovieListView;
 
 /**
  * Created by Senpai on 1/6/16.
  */
-public interface Presenter<T extends MovieListView> {
+public interface Presenter<T extends DevilListView> {
 
     void initialize();
 
@@ -16,4 +17,10 @@ public interface Presenter<T extends MovieListView> {
     void onViewDestroy();
 
     void setView(T view);
+
+    void onResume();
+
+    void onItemClicked(int position);
+
+    void onDestroy();
 }

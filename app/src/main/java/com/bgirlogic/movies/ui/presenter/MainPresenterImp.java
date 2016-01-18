@@ -17,7 +17,7 @@ import rx.Observer;
 /**
  * Created by Senpai on 1/10/16.
  */
-public class MainPresenterImp implements MainPresenter {
+public class MainPresenterImp implements Presenter<MovieListView> {
 
     public static final String SORT_BY_POPULARITY = "popularity.desc";
 

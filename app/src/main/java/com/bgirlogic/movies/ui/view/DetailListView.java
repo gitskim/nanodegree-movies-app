@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Senpai on 1/6/16.
  */
-public interface DetailListView {
+public interface DetailListView extends DevilListView {
 
     void showLoading();
 
