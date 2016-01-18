@@ -72,9 +72,11 @@
                 android:layout_below="@id/image" />
 
             <LinearLayout
+                android:id="@+id/trailer_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/overview"></LinearLayout>
+                android:layout_below="@+id/overview"
+                android:orientation="vertical"></LinearLayout>
         </RelativeLayout>
     </ScrollView>
 

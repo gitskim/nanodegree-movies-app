@@ -4,5 +4,5 @@
     <color name="colorPrimaryDark">@android:color/background_dark</color>
     <color name="colorAccent">@android:color/darker_gray</color>
 
-    <color name="light_bright_purple">#ba68c8</color>
+    <color name="light_bright_purple">#7B1FA2</color>
 </resources>

@@ -14,9 +14,9 @@ public interface DetailListView extends DevilListView {
 
     void hideLoading();
 
-    void setTrailers(List<Trailer> movies);
+    void setTrailers(List<Trailer> trailers);
 
-    void setReviews(List<Review> movies);
+    void setReviews(List<Review> reviews);
 
     void removeTrailer(Trailer movie);
 

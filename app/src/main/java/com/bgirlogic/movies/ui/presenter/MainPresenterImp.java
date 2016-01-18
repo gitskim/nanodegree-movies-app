@@ -1,12 +1,8 @@
 package com.bgirlogic.movies.ui.presenter;
 
-import android.util.Log;
-
 import com.bgirlogic.movies.api.RetrofitAdapter;
 import com.bgirlogic.movies.api.models.movie.Movie;
 import com.bgirlogic.movies.api.models.movie.Movies;
-import com.bgirlogic.movies.api.models.review.Reviews;
-import com.bgirlogic.movies.api.models.trailer.Trailers;
 import com.bgirlogic.movies.ui.view.MovieListView;
 
 import java.util.ArrayList;
@@ -79,6 +75,7 @@ public class MainPresenterImp implements Presenter<MovieListView> {
                 .subscribe(new Observer<Movies>() {
                     @Override
                     public void onCompleted() {
+                        mMovieListView.hideLoading();
                     }
 
                     @Override
@@ -87,50 +84,9 @@ public class MainPresenterImp implements Presenter<MovieListView> {
 
                     @Override
                     public void onNext(Movies movies) {
-                        mMovieListView.hideLoading();
                         mMovies = movies.getResults();
                         mMovies = filterMovies();
                         mMovieListView.setItems(mMovies);
-                    }
-                });
-    }
-
-    public void fetchTrailers(String id) {
-        RetrofitAdapter.getInstance().getTrailers(id)
-                .subscribe(new Observer<Trailers>() {
-                    @Override
-                    public void onCompleted() {
-                        Log.d("TAG fuckyou", "completed");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d("TAG fuckyou", "error " + e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(Trailers trailers) {
-                        Log.d("TAG", "fuckyou onnext " + trailers.getResults());
-                    }
-                });
-    }
-
-    public void fetchReviews(String id) {
-        RetrofitAdapter.getInstance().getReviews(id)
-                .subscribe(new Observer<Reviews>() {
-                    @Override
-                    public void onCompleted() {
-                        Log.d("TAG fuckyou", "completed");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d("TAG fuckyou", "error " + e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(Reviews trailers) {
-                        Log.d("TAG", "fuckyou onnext " + trailers.getResults());
                     }
                 });
     }
