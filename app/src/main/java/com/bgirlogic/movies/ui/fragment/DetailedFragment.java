@@ -22,6 +22,7 @@ import com.bgirlogic.movies.api.models.trailer.Trailer;
 import com.bgirlogic.movies.common.Utils;
 import com.bgirlogic.movies.ui.presenter.DetailedPresenterImp;
 import com.bgirlogic.movies.ui.view.DetailListView;
+import com.bgirlogic.movies.ui.view.ReviewRowView;
 import com.bgirlogic.movies.ui.view.TrailerRowView;
 import com.squareup.picasso.Picasso;
 
@@ -57,6 +58,9 @@ public class DetailedFragment extends Fragment implements DetailListView {
     @Bind(R.id.trailer_layout)
     protected LinearLayout mTrailerLayout;
 
+    @Bind(R.id.review_layout)
+    protected LinearLayout mReviewLayout;
+
     private static final String TAG = DetailedFragment.class.getSimpleName();
 
     public static final String PARAMS_MOVIE = "PARAMS_MOVIE";
@@ -68,6 +72,8 @@ public class DetailedFragment extends Fragment implements DetailListView {
     private DetailedPresenterImp mDetailedPresenterImp;
 
     private TrailerRowView mTrailerRow;
+
+    private ReviewRowView mReviewRow;
 
     private String mId;
 
@@ -126,6 +132,7 @@ public class DetailedFragment extends Fragment implements DetailListView {
     public void onResume() {
         super.onResume();
         mDetailedPresenterImp.fetchTrailers(mId);
+        mDetailedPresenterImp.fetchReviews(mId);
     }
 
     @Override
@@ -172,7 +179,25 @@ public class DetailedFragment extends Fragment implements DetailListView {
     //receives reviews from detailedPresenterImp.
     @Override
     public void setReviews(List<Review> reviews) {
+        if (reviews != null) {
+            mReviewLayout.removeAllViews();
+            mReviews = reviews;
 
+            for (int i = 0; i<reviews.size(); i++) {
+                String author = reviews.get(i).getAuthor();
+                String content = reviews.get(i).getContent();
+                final String url = reviews.get(i).getUrl();
+                mReviewRow = new ReviewRowView(this.getContext(), author, content);
+                mReviewLayout.addView(mReviewRow);
+                mReviewRow.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(Intent.ACTION_VIEW,
+                                Uri.parse(url)));
+                    }
+                });
+            }
+        }
     }
 
     @Override

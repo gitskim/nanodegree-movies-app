@@ -7,6 +7,7 @@ import com.bgirlogic.movies.ui.activity.DetailedActivity;
 import com.bgirlogic.movies.ui.activity.MainActivity;
 import com.bgirlogic.movies.ui.fragment.DetailedFragment;
 import com.bgirlogic.movies.ui.fragment.MainFragment;
+import com.bgirlogic.movies.ui.view.ReviewRowView;
 import com.bgirlogic.movies.ui.view.TrailerRowView;
 
 import javax.inject.Singleton;
@@ -36,4 +37,6 @@ public interface AppComponent {
 
     //view
     void inject(TrailerRowView view);
+
+    void inject(ReviewRowView view);
 }
