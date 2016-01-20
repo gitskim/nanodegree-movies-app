@@ -1,6 +1,7 @@
 package com.bgirlogic.movies.data;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -39,14 +40,56 @@ public class MoviesProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return null;
+    public Cursor query(Uri uri, String[] projection, String selection,
+                        String[] selectionArgs, String sortOrder) {
+        Cursor retCursor;
+        switch (sUriMatcher.match(uri)) {
+            //all movies selected
+            case MOVIE: {
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        MoviesContract.MovieEntry.TABLE_MOVIES,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+                return retCursor;
+            }
+            //individual movie based on id selected
+            case MOVIE_WITH_ID:{
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        MoviesContract.MovieEntry.TABLE_MOVIES,
+                        projection,
+                        MoviesContract.MovieEntry._ID + " = ?",
+                        new String[] {String.valueOf(ContentUris.parseId(uri))},
+                        null,
+                        null,
+                        sortOrder);
+                return retCursor;
+            }
+            default:
+                //be default, a bad uri is assumed
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
     }
 
     @Nullable
     @Override
     public String getType(Uri uri) {
-        return null;
+        final int match = sUriMatcher.match(uri);
+
+        switch (match) {
+            case MOVIE: {
+                return MoviesContract.MovieEntry.CONTENT_DIR_TYPE;
+            }
+            case MOVIE_WITH_ID: {
+                return MoviesContract.MovieEntry.CONTENT_ITEM_TYPE;
+            }
+            default: {
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+            }
+        }
     }
 
     @Nullable
