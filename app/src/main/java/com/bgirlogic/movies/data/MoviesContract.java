@@ -32,7 +32,7 @@ public class MoviesContract {
 			ContentResolver.CURSOR_ITEM_BASE_TYPE +"/" + CONTENT_AUTHORITY + "/" + TABLE_MOVIES;
 
 		// for building URIs on insertion
-		public static Uri buildFlavorsUri(long id){
+		public static Uri buildMoviesUri(long id){
         		return ContentUris.withAppendedId(CONTENT_URI, id);
 		}
 	}

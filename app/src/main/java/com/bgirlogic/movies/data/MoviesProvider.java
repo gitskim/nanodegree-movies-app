@@ -5,6 +5,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 
@@ -95,7 +96,27 @@ public class MoviesProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        return null;
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        Uri returnUri;
+        switch (sUriMatcher.match(uri)) {
+            case MOVIE: {
+                long _id = db.insert(MoviesContract.MovieEntry.TABLE_MOVIES, null, values);
+                if (_id > 0) {
+                    // when the id exists, the uri is built with the method from the contract.
+                    returnUri = MoviesContract.MovieEntry.buildMoviesUri(_id);
+                } else {
+                    throw new android.database.SQLException("Failed to insert row into: " + uri);
+                }
+                
+                break;
+            }
+
+            default: {
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+            }
+        }
+        getContext().getContentResolver().notifyChange(uri, null);
+        return returnUri;
     }
 
     @Override
