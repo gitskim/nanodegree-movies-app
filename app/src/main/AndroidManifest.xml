@@ -28,5 +28,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <!--authority is the name of the package name plus the type of content provider-->
+        <provider
+            android:name=".data.MoviesProvider"
+            android:authorities="com.bgirlogic.movies.movies.app"
+            android:exported="false"
+            android:syncable="true"></provider>
     </application>
 </manifest>

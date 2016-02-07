@@ -5,6 +5,7 @@ import android.app.Application;
 import com.bgirlogic.movies.di.AppComponent;
 import com.bgirlogic.movies.di.AppModule;
 import com.bgirlogic.movies.di.DaggerAppComponent;
+import com.facebook.stetho.Stetho;
 
 /**
  * Created by kimsuh on 12/10/15.
@@ -32,6 +33,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+        Stetho.initializeWithDefaults(this);
         appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
         appComponent.inject(this);
     }

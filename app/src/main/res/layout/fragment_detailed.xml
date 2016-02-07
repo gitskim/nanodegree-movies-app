@@ -59,10 +59,11 @@
 
             <TextView
                 android:id="@+id/mark_favorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+                android:background="@drawable/fav_star"
                 android:layout_below="@id/vote_average" />
 
             <TextView

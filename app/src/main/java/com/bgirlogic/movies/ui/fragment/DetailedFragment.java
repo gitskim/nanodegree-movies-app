@@ -1,5 +1,6 @@
 package com.bgirlogic.movies.ui.fragment;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.bgirlogic.movies.api.models.movie.Movie;
 import com.bgirlogic.movies.api.models.review.Review;
 import com.bgirlogic.movies.api.models.trailer.Trailer;
 import com.bgirlogic.movies.common.Utils;
+import com.bgirlogic.movies.data.MoviesContract;
 import com.bgirlogic.movies.ui.presenter.DetailedPresenterImp;
 import com.bgirlogic.movies.ui.view.DetailListView;
 import com.bgirlogic.movies.ui.view.ReviewRowView;
@@ -31,6 +33,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Senpai on 1/10/16.
@@ -208,5 +211,17 @@ public class DetailedFragment extends Fragment implements DetailListView {
     @Override
     public void removeReview(Review movie) {
 
+    }
+
+    @OnClick(R.id.mark_favorite)
+    protected void onClickFavorite() {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MoviesContract.MovieEntry.COLUMN_MOVIE_ID, mMovie.getId());
+        contentValues.put(MoviesContract.MovieEntry.COLUMN_TITLE, mMovie.getTitle());
+        contentValues.put(MoviesContract.MovieEntry.COLUMN_POSTER_PATH, mMovie.getPosterPath());
+        contentValues.put(MoviesContract.MovieEntry.COLUMN_RELEASE_DATE, mMovie.getReleaseDate());
+        contentValues.put(MoviesContract.MovieEntry.COLUMN_VOTE_AVERAGE, mMovie.getmVoteAverage());
+        getActivity().getContentResolver().insert(MoviesContract.MovieEntry.CONTENT_URI,
+                contentValues);
     }
 }

@@ -31,6 +31,34 @@ public class Movie implements Parcelable {
     @SerializedName("vote_average")
     private double mVoteAverage;
 
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
+    }
+
+    public void setRelease_date(String release_date) {
+        this.release_date = release_date;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public void setIsAdult(boolean adult) {
+        this.adult = adult;
+    }
+
+    public void setmVoteAverage(double mVoteAverage) {
+        this.mVoteAverage = mVoteAverage;
+    }
+
     public String getPosterPath() {
         return poster_path;
     }
