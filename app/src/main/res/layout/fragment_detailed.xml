@@ -63,8 +63,8 @@
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/fav_star"
-                android:layout_below="@id/vote_average" />
+                android:layout_below="@id/vote_average"
+                android:background="@drawable/fav_star" />
 
             <TextView
                 android:id="@+id/overview"

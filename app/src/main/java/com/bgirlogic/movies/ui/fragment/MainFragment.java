@@ -1,7 +1,5 @@
 package com.bgirlogic.movies.ui.fragment;
 
-import android.content.ContentValues;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -17,7 +15,6 @@ import android.widget.ProgressBar;
 import com.bgirlogic.movies.App;
 import com.bgirlogic.movies.R;
 import com.bgirlogic.movies.api.models.movie.Movie;
-import com.bgirlogic.movies.data.MoviesContract;
 import com.bgirlogic.movies.ui.SpaceItemDecoration;
 import com.bgirlogic.movies.ui.StaggeredViewAdapter;
 import com.bgirlogic.movies.ui.presenter.MainPresenterImp;

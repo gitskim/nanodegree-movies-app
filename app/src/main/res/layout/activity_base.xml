@@ -23,8 +23,9 @@
     </android.support.design.widget.AppBarLayout>
 
     <!--TODO: replace the temporary fix for the problem of frame overlapping the toolbar by giving it top margin.-->
-    <FrameLayout
+    <include
         android:id="@+id/container"
+        layout="@layout/container_frameout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?android:attr/actionBarSize" />
