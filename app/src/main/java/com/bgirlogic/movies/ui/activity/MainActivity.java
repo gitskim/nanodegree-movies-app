@@ -3,7 +3,6 @@ package com.bgirlogic.movies.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -12,6 +11,7 @@ import android.view.View;
 import com.bgirlogic.movies.App;
 import com.bgirlogic.movies.R;
 import com.bgirlogic.movies.api.models.movie.Movie;
+import com.bgirlogic.movies.common.Utils;
 import com.bgirlogic.movies.ui.fragment.DetailedFragment;
 import com.bgirlogic.movies.ui.fragment.MainFragment;
 
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         ((App) getApplication()).getDaggerComponent().inject(this);
 
-        if (findViewById(R.id.container2) != null) {
+        if (Utils.isLandscape()) {
             mTwoPane = true;
             if (savedInstanceState != null) {
                 return;
