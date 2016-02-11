@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -84,6 +85,8 @@ public class DetailedFragment extends Fragment implements DetailListView {
 
     private List<Review> mReviews;
 
+    private TextView mEmptytextView;
+
     public static DetailedFragment newInstance(Movie movie) {
         DetailedFragment fragment = new DetailedFragment();
         Bundle args = new Bundle();
@@ -117,9 +120,14 @@ public class DetailedFragment extends Fragment implements DetailListView {
         //inject this activity's dependencies
         ((App) getActivity().getApplication()).getDaggerComponent().inject(this);
 
-        if (mMovie != null) {
-            mView = inflater.inflate(R.layout.fragment_detailed, container, false);
-            ButterKnife.bind(this, mView);
+        mView = inflater.inflate(R.layout.fragment_detailed, container, false);
+        ButterKnife.bind(this, mView);
+
+        if (mMovie == null) {
+            Log.d(TAG, "movie is null in detail fragment.");
+            mTitle.setText("Nothing has been selected yet");
+        } else {
+            Log.d(TAG, "movie is not null in detail fragment.");
             Picasso.with(getContext())
                     .load(Utils.getImageUrl(mMovie.getPosterPath())).into(mImageView);
 
@@ -130,8 +138,6 @@ public class DetailedFragment extends Fragment implements DetailListView {
             mVoteAverage.setText("Average vote: " + Math.round(mMovie.getmVoteAverage()) + "/10");
 
             mOverview.setText("Plot Synopsis: " + mMovie.getOverview());
-        } else {
-            mView = inflater.inflate(R.layout.fragment_empty, container, false);
         }
         return mView;
     }
@@ -195,7 +201,7 @@ public class DetailedFragment extends Fragment implements DetailListView {
             mReviewLayout.removeAllViews();
             mReviews = reviews;
 
-            for (int i = 0; i<reviews.size(); i++) {
+            for (int i = 0; i < reviews.size(); i++) {
                 String author = reviews.get(i).getAuthor();
                 String content = reviews.get(i).getContent();
                 final String url = reviews.get(i).getUrl();

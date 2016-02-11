@@ -43,15 +43,14 @@ public class MainActivity extends AppCompatActivity {
 
         if (findViewById(R.id.container2) != null) {
             mTwoPane = true;
+            if (savedInstanceState != null) {
+                return;
+            }
             inflateMainFragment();
 
-            if (getIntent() != null) {
-                mMovie = getIntent().getParcelableExtra(DetailedActivity.PARAM_MOVIE);
-                inflateDetailFragment(mMovie);
-            }
-            if (savedInstanceState == null) {
-                inflateDetailFragment(null);
-            }
+            mMovie = getIntent().getParcelableExtra(DetailedActivity.PARAM_MOVIE);
+            inflateDetailFragment(mMovie);
+
         } else {
             inflateMainFragment();
         }
