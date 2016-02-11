@@ -1,7 +1,9 @@
 package com.bgirlogic.movies.common;
 
+import android.content.res.Configuration;
 import android.text.TextUtils;
 
+import com.bgirlogic.movies.App;
 import com.jakewharton.rxbinding.internal.Preconditions;
 
 import javax.inject.Singleton;
@@ -22,5 +24,9 @@ public class Utils {
         uriString.append(IMAGE_SIZE);
         uriString.append(imgPath);
         return uriString.toString();
+    }
+
+    public static boolean isLandscape() {
+        return App.getInstance().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 }

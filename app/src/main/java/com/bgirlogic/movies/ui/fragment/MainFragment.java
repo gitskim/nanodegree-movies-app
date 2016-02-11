@@ -8,15 +8,19 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ProgressBar;
 
 import com.bgirlogic.movies.App;
 import com.bgirlogic.movies.R;
 import com.bgirlogic.movies.api.models.movie.Movie;
+import com.bgirlogic.movies.common.Utils;
 import com.bgirlogic.movies.ui.SpaceItemDecoration;
 import com.bgirlogic.movies.ui.StaggeredViewAdapter;
+import com.bgirlogic.movies.ui.activity.DetailedActivity;
 import com.bgirlogic.movies.ui.presenter.MainPresenterImp;
 import com.bgirlogic.movies.ui.view.MovieListView;
 

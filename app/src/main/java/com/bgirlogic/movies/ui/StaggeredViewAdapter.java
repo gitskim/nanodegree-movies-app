@@ -13,6 +13,8 @@ import com.bgirlogic.movies.R;
 import com.bgirlogic.movies.api.models.movie.Movie;
 import com.bgirlogic.movies.common.Utils;
 import com.bgirlogic.movies.ui.activity.DetailedActivity;
+import com.bgirlogic.movies.ui.activity.MainActivity;
+import com.bgirlogic.movies.ui.fragment.DetailedFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -52,8 +54,13 @@ public class StaggeredViewAdapter extends RecyclerView.Adapter<StaggeredView> {
             @Override
             public void onClick(View v) {
                 Log.d("tag", "movieId: " + mMovies.get(position).getId());
-                v.getContext().startActivity(
-                        DetailedActivity.newIntent(sContext, mMovies.get(position)));
+                if (!Utils.isLandscape()) {
+                    v.getContext().startActivity(
+                            DetailedActivity.newIntent(sContext, mMovies.get(position)));
+                } else {
+                    v.getContext().startActivity(
+                            MainActivity.newIntentForDetailedFragment(sContext, mMovies.get(position)));
+                }
             }
         });
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,11 +22,12 @@ import butterknife.ButterKnife;
 /**
  * Created by Senpai on 1/3/16.
  */
-public class DetailedActivity extends BaseActivity {
+public class DetailedActivity extends AppCompatActivity {
 
     public static final String PARAM_MOVIE = "movie";
 
     private Movie mMovie;
+    private View mMainCoordinatorLayoutView;
 
     public static Intent newIntent(Context context, Movie movie) {
         Intent intent = new Intent(context, DetailedActivity.class);
@@ -38,14 +40,19 @@ public class DetailedActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         //inject dependencies
         ((App) getApplication()).getDaggerComponent().inject(this);
+        mMainCoordinatorLayoutView = findViewById(R.id.activity_detail);
 
         //inject views
         ButterKnife.bind(this);
+        mMovie = getIntent().getParcelableExtra(PARAM_MOVIE);
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container2, DetailedFragment.newInstance(mMovie))
+                .commit();
     }
 
-    @Override
-    protected Fragment getFragment() {
-        mMovie = getIntent().getParcelableExtra(PARAM_MOVIE);
-        return DetailedFragment.newInstance(mMovie);//null here
-    }
+//    @Override
+//    protected Fragment getFragment() {
+//
+//    }
 }

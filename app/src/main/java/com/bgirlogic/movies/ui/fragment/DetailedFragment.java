@@ -98,13 +98,14 @@ public class DetailedFragment extends Fragment implements DetailListView {
 
         if (getArguments() != null) {
             mMovie = getArguments().getParcelable(PARAMS_MOVIE);
-            mId = mMovie.getId();
+            if (mMovie != null) {
+                mId = mMovie.getId();
+            }
+            mDetailedPresenterImp = new DetailedPresenterImp(this, mId);
+
+            mTrailers = new ArrayList<>();
+            mReviews = new ArrayList<>();
         }
-
-        mDetailedPresenterImp = new DetailedPresenterImp(this, mId);
-
-        mTrailers = new ArrayList<>();
-        mReviews = new ArrayList<>();
     }
 
     @Nullable
@@ -112,22 +113,26 @@ public class DetailedFragment extends Fragment implements DetailListView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        mView = inflater.inflate(R.layout.fragment_detailed, container, false);
-        ButterKnife.bind(this, mView);
 
         //inject this activity's dependencies
         ((App) getActivity().getApplication()).getDaggerComponent().inject(this);
 
-        Picasso.with(getContext())
-                .load(Utils.getImageUrl(mMovie.getPosterPath())).into(mImageView);
+        if (mMovie != null) {
+            mView = inflater.inflate(R.layout.fragment_detailed, container, false);
+            ButterKnife.bind(this, mView);
+            Picasso.with(getContext())
+                    .load(Utils.getImageUrl(mMovie.getPosterPath())).into(mImageView);
 
-        mTitle.setText(mMovie.getTitle());
+            mTitle.setText(mMovie.getTitle());
 
-        mReleaseDate.setText("Release date: " + mMovie.getReleaseDate());
+            mReleaseDate.setText("Release date: " + mMovie.getReleaseDate());
 
-        mVoteAverage.setText("Average vote: " + Math.round(mMovie.getmVoteAverage()) + "/10");
+            mVoteAverage.setText("Average vote: " + Math.round(mMovie.getmVoteAverage()) + "/10");
 
-        mOverview.setText("Plot Synopsis: " + mMovie.getOverview());
+            mOverview.setText("Plot Synopsis: " + mMovie.getOverview());
+        } else {
+            mView = inflater.inflate(R.layout.fragment_empty, container, false);
+        }
         return mView;
     }
 
@@ -149,12 +154,16 @@ public class DetailedFragment extends Fragment implements DetailListView {
 
     @Override
     public void showLoading() {
-        mLoader.setVisibility(View.VISIBLE);
+        if (mMovie != null) {
+            mLoader.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void hideLoading() {
-        mLoader.setVisibility(View.GONE);
+        if (mMovie != null) {
+            mLoader.setVisibility(View.GONE);
+        }
     }
 
     //receives trailers from detailedPresenterImp.

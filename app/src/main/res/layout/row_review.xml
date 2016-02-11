@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/review_author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        tools:text="author"
         android:textSize="20sp" />
 
     <TextView
@@ -20,5 +21,5 @@
         android:id="@+id/review_open"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="open" />
-</LinearLayout>
+        tools:text="" />
+</RelativeLayout>
