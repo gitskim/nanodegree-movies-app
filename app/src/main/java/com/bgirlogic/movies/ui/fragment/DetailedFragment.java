@@ -183,11 +183,11 @@ public class DetailedFragment extends Fragment implements DetailListView {
             for (int i = 0; i < trailers.size(); i++) {
                 mTrailerRow = new TrailerRowView(this.getContext(), String.valueOf(counter));
                 mTrailerLayout.addView(mTrailerRow);
-                final String finalId = trailers.get(i).getId();
+                final String finalKey = trailers.get(i).getKey();
                 mTrailerRow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + finalId)));
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + finalKey)));
                     }
                 });
                 counter++;
