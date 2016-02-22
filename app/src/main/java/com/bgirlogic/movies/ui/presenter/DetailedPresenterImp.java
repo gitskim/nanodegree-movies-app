@@ -81,18 +81,16 @@ public class DetailedPresenterImp implements Presenter<DetailListView> {
                 .subscribe(new Observer<Reviews>() {
                     @Override
                     public void onCompleted() {
-                        Log.d("TAG fuckyou", "completed");
                         mDetailListView.hideLoading();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("TAG fuckyou", "error " + e.getMessage());
+                        Log.d("TAG", "error " + e.getMessage());
                     }
 
                     @Override
                     public void onNext(Reviews reviews) {
-                        Log.d("TAG", "fuckyou onnext " + reviews.getResults());
                         mReviews = reviews.getResults();
                         mDetailListView.setReviews(mReviews);
                     }
@@ -106,17 +104,14 @@ public class DetailedPresenterImp implements Presenter<DetailListView> {
                     @Override
                     public void onCompleted() {
                         mDetailListView.hideLoading();
-                        Log.d("TAG fuckyou", "completed");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("TAG fuckyou", "error " + e.getMessage());
                     }
 
                     @Override
                     public void onNext(Trailers trailers) {
-                        Log.d("TAG", "fuckyou onnext " + trailers.getResults());
                         mTrailers = trailers.getResults();
                         mDetailListView.setTrailers(mTrailers);
                     }

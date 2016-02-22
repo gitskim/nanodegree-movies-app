@@ -1,6 +1,9 @@
 package com.bgirlogic.movies.common;
 
+import android.content.Context;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.text.TextUtils;
 
 import com.bgirlogic.movies.App;
@@ -28,5 +31,12 @@ public class Utils {
 
     public static boolean isLandscape() {
         return App.getInstance().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+    }
+
+    public static boolean isConnectedToInternet() {
+            ConnectivityManager connectivityManager
+                    = (ConnectivityManager) App.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

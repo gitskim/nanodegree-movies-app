@@ -3,6 +3,7 @@
     package="com.bgirlogic.movies">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".App"
@@ -26,7 +27,6 @@
             android:name=".ui.activity.DetailedActivity"
             android:label="Movie"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <!--authority is the name of the package name plus the type of content provider-->
         <provider

@@ -8,10 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ProgressBar;
 
 import com.bgirlogic.movies.App;
@@ -20,7 +18,6 @@ import com.bgirlogic.movies.api.models.movie.Movie;
 import com.bgirlogic.movies.common.Utils;
 import com.bgirlogic.movies.ui.SpaceItemDecoration;
 import com.bgirlogic.movies.ui.StaggeredViewAdapter;
-import com.bgirlogic.movies.ui.activity.DetailedActivity;
 import com.bgirlogic.movies.ui.presenter.MainPresenterImp;
 import com.bgirlogic.movies.ui.view.MovieListView;
 
@@ -37,9 +34,11 @@ public class MainFragment extends Fragment implements MovieListView {
 
     private static final String TAG = MainFragment.class.getSimpleName();
 
+    private static final String MOVIES_ARRAY_LIST = "movies_array";
+
     private View mView;
 
-    private List<Movie> mMovies;
+    private ArrayList<Movie> mMovies;
 
     private boolean mIsPopularitySorted, mIsRankSorted, mIsFavoritSorted;
 
@@ -69,6 +68,12 @@ public class MainFragment extends Fragment implements MovieListView {
         mMovies = new ArrayList<>();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(MOVIES_ARRAY_LIST, mMovies);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,17 +85,27 @@ public class MainFragment extends Fragment implements MovieListView {
         //inject this activity's dependencies
         ((App) getActivity().getApplication()).getDaggerComponent().inject(this);
 
+
+        if (savedInstanceState != null) {
+            mMovies = savedInstanceState.getParcelableArrayList(MOVIES_ARRAY_LIST);
+        }
         mRecylerView.setLayoutManager(
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-
         initAdapter();
+
         return mView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mMainPresenterImp.onResume();
+        if (Utils.isConnectedToInternet()) {
+            mMainPresenterImp.onResume();
+        } else {
+            Snackbar.make(mView,
+                    "No Internet Connection", Snackbar.LENGTH_SHORT)
+                    .show();
+        }
     }
 
     @Override

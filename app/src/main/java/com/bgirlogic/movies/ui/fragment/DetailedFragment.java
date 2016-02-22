@@ -60,6 +60,9 @@ public class DetailedFragment extends Fragment implements DetailListView {
     @Bind(R.id.overview)
     protected TextView mOverview;
 
+    @Bind(R.id.mark_favorite)
+    protected TextView mMarkFavorite;
+
     @Bind(R.id.trailer_layout)
     protected LinearLayout mTrailerLayout;
 
@@ -69,6 +72,8 @@ public class DetailedFragment extends Fragment implements DetailListView {
     private static final String TAG = DetailedFragment.class.getSimpleName();
 
     public static final String PARAMS_MOVIE = "PARAMS_MOVIE";
+
+    public static final String PARAMS_MOVIE_ID = "PARAMS_MOVIE_ID";
 
     private View mView;
 
@@ -112,6 +117,13 @@ public class DetailedFragment extends Fragment implements DetailListView {
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(PARAMS_MOVIE_ID, mId);
+        outState.putParcelable(PARAMS_MOVIE, mMovie);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -124,10 +136,11 @@ public class DetailedFragment extends Fragment implements DetailListView {
         mView = inflater.inflate(R.layout.fragment_detailed, container, false);
         ButterKnife.bind(this, mView);
 
-        if (mMovie == null) {
-            Log.d(TAG, "movie is null in detail fragment.");
-            mTitle.setText("Nothing has been selected yet");
-        } else {
+        if (savedInstanceState != null) {
+            mMovie = savedInstanceState.getParcelable(PARAMS_MOVIE);
+        }
+
+        if (mMovie != null) {
             Log.d(TAG, "movie is not null in detail fragment.");
             Picasso.with(getContext())
                     .load(Utils.getImageUrl(mMovie.getPosterPath())).into(mImageView);
@@ -139,6 +152,11 @@ public class DetailedFragment extends Fragment implements DetailListView {
             mVoteAverage.setText("Average vote: " + Math.round(mMovie.getmVoteAverage()) + "/10");
 
             mOverview.setText("Plot Synopsis: " + mMovie.getOverview());
+
+            mMarkFavorite.setVisibility(View.VISIBLE);
+        } else {
+            Log.d(TAG, "movie is null in detail fragment.");
+            mTitle.setText("Nothing has been selected yet");
         }
         return mView;
     }

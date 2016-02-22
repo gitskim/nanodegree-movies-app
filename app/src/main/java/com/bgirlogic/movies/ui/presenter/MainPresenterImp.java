@@ -6,6 +6,7 @@ import com.bgirlogic.movies.App;
 import com.bgirlogic.movies.api.RetrofitAdapter;
 import com.bgirlogic.movies.api.models.movie.Movie;
 import com.bgirlogic.movies.api.models.movie.Movies;
+import com.bgirlogic.movies.common.Utils;
 import com.bgirlogic.movies.data.MoviesContract;
 import com.bgirlogic.movies.ui.view.MovieListView;
 

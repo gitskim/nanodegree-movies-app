@@ -3,6 +3,7 @@ package com.bgirlogic.movies.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -21,9 +22,17 @@ public class MainActivity extends AppCompatActivity {
 
     private View mMainCoordinatorLayoutView;
 
-    private boolean mTwoPane = false;
+    private boolean mTwoPane;
 
     private Movie mMovie;
+
+    private MainFragment mainFragment;
+
+    private DetailedFragment detailedFragment;
+
+    private final String SIMPLE_FRAGMENT_TAG = "myfragmenttag";
+
+    private final String SIMPLE_FRAGMENT_TAG_MAIN = "main";
 
     public static Intent newIntentForDetailedFragment(Context context, Movie movie) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -70,12 +79,14 @@ public class MainActivity extends AppCompatActivity {
     private void inflateMainFragment() {
         getSupportFragmentManager().beginTransaction()
                 .add(getContainerId(), MainFragment.newInstance())
+                .addToBackStack(SIMPLE_FRAGMENT_TAG_MAIN)
                 .commit();
     }
 
     private void inflateDetailFragment(Movie movie) {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container2, DetailedFragment.newInstance(movie))
+                .addToBackStack(SIMPLE_FRAGMENT_TAG)
                 .commit();
     }
 }
