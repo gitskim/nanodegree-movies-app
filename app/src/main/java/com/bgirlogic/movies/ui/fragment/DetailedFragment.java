@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bgirlogic.movies.App;
 import com.bgirlogic.movies.R;
@@ -164,8 +165,14 @@ public class DetailedFragment extends Fragment implements DetailListView {
     @Override
     public void onResume() {
         super.onResume();
-        mDetailedPresenterImp.fetchTrailers(mId);
-        mDetailedPresenterImp.fetchReviews(mId);
+        if (Utils.isConnectedToInternet()) {
+            mDetailedPresenterImp.fetchTrailers(mId);
+            mDetailedPresenterImp.fetchReviews(mId);
+        } else {
+            if (!Utils.isLandscape() && !Utils.isTablet()) {
+                Toast.makeText(getActivity(), "INTERNET LOST", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     @Override

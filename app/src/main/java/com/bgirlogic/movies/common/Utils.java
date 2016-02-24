@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.text.TextUtils;
 
 import com.bgirlogic.movies.App;
+import com.bgirlogic.movies.R;
 import com.jakewharton.rxbinding.internal.Preconditions;
 
 import javax.inject.Singleton;
@@ -31,6 +32,10 @@ public class Utils {
 
     public static boolean isLandscape() {
         return App.getInstance().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+    }
+
+    public static boolean isTablet() {
+        return App.getInstance().getResources().getBoolean(R.bool.isTablet);
     }
 
     public static boolean isConnectedToInternet() {

@@ -43,11 +43,17 @@ public class DetailedActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mMovie = getIntent().getParcelableExtra(PARAM_MOVIE);
 
-        if (Utils.isLandscape()) {
+        //TODO: issue to fix now is why is the god-dman detailed fragment inflated twice when the configuration changes.
+        if (Utils.isLandscape() && Utils.isTablet()) {
             mTwoPane = true;
             inflateMainFragment();
+            inflateDetailFragment(mMovie);
+        } else {
+            if (savedInstanceState != null) {
+                return;
+            }
+            inflateDetailFragment(mMovie);
         }
-        inflateDetailFragment(mMovie);
     }
 
     private void inflateMainFragment() {

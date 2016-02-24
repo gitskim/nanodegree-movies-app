@@ -58,8 +58,15 @@ public class StaggeredViewAdapter extends RecyclerView.Adapter<StaggeredView> {
                     v.getContext().startActivity(
                             DetailedActivity.newIntent(sContext, mMovies.get(position)));
                 } else {
-                    v.getContext().startActivity(
-                            MainActivity.newIntentForDetailedFragment(sContext, mMovies.get(position)));
+                    //landscape
+                    if (!Utils.isTablet()) {
+                        //phone
+                        v.getContext().startActivity(
+                                DetailedActivity.newIntent(sContext, mMovies.get(position)));
+                    } else {
+                        v.getContext().startActivity(
+                                MainActivity.newIntentForDetailedFragment(sContext, mMovies.get(position)));
+                    }
                 }
             }
         });

@@ -50,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
         ((App) getApplication()).getDaggerComponent().inject(this);
 
-        if (Utils.isLandscape()) {
+        if (Utils.isLandscape() && Utils.isTablet()) {
+            boolean land = Utils.isLandscape();
+            boolean tab = Utils.isTablet();
             mTwoPane = true;
             if (savedInstanceState != null) {
                 return;
